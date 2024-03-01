@@ -1,5 +1,5 @@
 import express from "express";
-import { validateJwt } from "../middlewares/validate-jwt.js"
+import { validateJwt } from "../middlewares/validate-jws.js"
 import { test, save, showsCategory } from "./category.controller.js"
 
 

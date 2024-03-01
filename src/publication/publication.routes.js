@@ -1,9 +1,10 @@
 import express from "express";
-import { validateJwt } from "../middlewares/validate-jwt.js";
-import { deleteU, login, register, test, update } from "./user.controller.js";
+import { validateJwt } from "../middlewares/validate-jws.js";
+import { createPublication } from "./publication.controller.js";
 
 const api = express.Router()
 
+api.post('/createPublication', createPublication)
 
 
 export default api

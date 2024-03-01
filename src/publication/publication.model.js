@@ -10,6 +10,10 @@ const publicationSchema = mongoose.Schema({
         ref: 'category',
         required: true
     },
+    username: {
+        type: String,
+        required: true
+    },
     content: {
         type: String,
         required: true

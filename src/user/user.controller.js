@@ -1,6 +1,8 @@
 'use strict'
 
 import { encrypt, checkPassword, checkUpdate } from '../utils/validator.js'
+import  jwt  from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import User from './user.model.js'
 import { generateJwt } from '../utils/jwt.js'
 
@@ -64,32 +66,48 @@ export const login = async(req, res) => {
     }
 }
 
-export const update = async(req, res) => {
+export const update = async (req, res) => {
     try {
-        //Obtener el id del usuario a actulizar
-        let { id } = req.params
-        //Obtener los datos a actualizar
-        let data = req.body
-        //Validar si data trae datos
-        let update = checkUpdate(data, id)
-        if(!update) return res.status(400).send({message: 'Have submit some data that cannot be update or missing data'})
-        //Validar si tiene permisos (tokenización)
-        //Actualizar (DB)
-        let updatedUser = await User.findOneAndUpdate(
-            {_id: id}, //Objects <- hexadecimales (Hora sys, Version Mongo, Llaver privada...) asi guarda mongoDB los ID
-            data, //Los datos que se van a actualizar
-            {new: true} //Objeto de la DB ya actualizado
-        )
-        //Validar la actualización
-        if(!updatedUser) return res.status(401).send({message: 'User not found and not updated'})
-        //Respondo el usuario
-        return res.send({message: 'Updated user', updatedUser}) 
-    } catch (err) {
-        console.error(err)
-        if(err.keyValue.username) return res.status(400).send({message: `Username ${err.keyValue.username} is already taken`})
-        return res.status(500).send({message: 'Error updating account'})
+        let { id } = req.params;
+        //Obtener secretkey
+        let secretKey = process.env.SECRET_KEY
+        //obtener el token 
+        let { authorization } = req.headers
+        let { uid } = jwt.verify(authorization, secretKey)
+        if(id == uid){
+        let data = req.body;
+        let update = checkUpdate(data, id);
+        if (!update) return res.status(400).send({ message: 'Have submit some data that cannot be update or missing data' })
+        if (data.password) {
+            if (!data.oldPassword) {
+                return res.status(400).send({ message: 'The old password is request to update' })
+            }
+            const user = await User.findById(id);
+            const isPasswordValid = await bcrypt.compare(data.oldPassword, user.password)
+            if (!isPasswordValid) {
+                return res.status(401).send({ message: 'The previous password is incorrect' })
+            }
+
+            data.password = await encrypt(data.password)
+        }
+
+        let updateUser = await User.findOneAndUpdate(
+            { _id: id }, 
+            data, 
+            { new: true } 
+        );
+
+        if (!updateUser) return res.status(401).send({ message: 'User not found and not updated' });
+       
+        return res.send({ message: 'Update user', updateUser });
+    } else {
+        return res.status(400).send({ message: 'It cannot be updated, it is not your user' })
     }
-}
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({ message: 'Error updating the user' });
+    }
+};
 
 export const createAdmin = async () => {
     try {
