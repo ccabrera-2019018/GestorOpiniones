@@ -16,7 +16,18 @@
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": []
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "jnoj@kinal.org.gt",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "54321",
+									"type": "text"
+								}
+							]
 						},
 						"url": {
 							"raw": "localhost:2656/user/login",
@@ -36,7 +47,53 @@
 					"name": "CreateUser",
 					"request": {
 						"method": "POST",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Josue Noj",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Josue",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "jnoj",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "jnoj@kinal.org.gt",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:2656/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "2656",
+							"path": [
+								"user",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
@@ -44,9 +101,35 @@
 					"name": "UpdateUser",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUyNjBiOTU3MmZjODcwYWU3ZDVlYzIiLCJ1c2VybmFtZSI6Impub2oiLCJuYW1lIjoiSm9zdWUgTm9qIiwiaWF0IjoxNzA5MzM1NDYwLCJleHAiOjE3MDkzNDYyNjB9.61xpvCQBl0r6O349O3dd9twtRxiyusGkro0BFZIV3iw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Josue",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "54321",
+									"type": "text"
+								},
+								{
+									"key": "oldPassword",
+									"value": "12345",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
-							"raw": "localhost:2656/user/update/",
+							"raw": "localhost:2656/user/update/65e260b9572fc870ae7d5ec2",
 							"host": [
 								"localhost"
 							],
@@ -54,7 +137,7 @@
 							"path": [
 								"user",
 								"update",
-								""
+								"65e260b9572fc870ae7d5ec2"
 							]
 						}
 					},
@@ -68,8 +151,81 @@
 				{
 					"name": "CreatePublication",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUyNjBiOTU3MmZjODcwYWU3ZDVlYzIiLCJ1c2VybmFtZSI6Impub2oiLCJuYW1lIjoiSm9zdWUiLCJpYXQiOjE3MDkzMzU4MDUsImV4cCI6MTcwOTM0NjYwNX0.aZIEsR6Fv0duuxGnKNuftomRWM6XMmM6HSpPcR4c160",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "La intelgencia artificial, el futuro?",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "65e268cef10ebc11ac249f87",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "content",
+									"value": "La inteigencia artificial esta haciendo tareas XD",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:2656/publication/createPublication",
+							"host": [
+								"localhost"
+							],
+							"port": "2656",
+							"path": [
+								"publication",
+								"createPublication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePublication",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWUyNjBiOTU3MmZjODcwYWU3ZDVlYzIiLCJ1c2VybmFtZSI6Impub2oiLCJuYW1lIjoiSm9zdWUiLCJpYXQiOjE3MDkzMzU4MDUsImV4cCI6MTcwOTM0NjYwNX0.aZIEsR6Fv0duuxGnKNuftomRWM6XMmM6HSpPcR4c160",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:2656/publication/deletePublication/65e269945dcf23dcff56b91e",
+							"host": [
+								"localhost"
+							],
+							"port": "2656",
+							"path": [
+								"publication",
+								"deletePublication",
+								"65e269945dcf23dcff56b91e"
+							]
+						}
 					},
 					"response": []
 				}
